@@ -18,7 +18,7 @@ public class UserPrincipal implements UserDetails {
     public UserPrincipal(User user){
         userName = user.getUserName();
         password = user.getPassword();
-        authorities = Collections.singleton(new SimpleGrantedAuthority("USER"));
+        authorities = Collections.singleton(new SimpleGrantedAuthority("ROLE_" + user.getRole().name()));
     }
 
     @Override

@@ -40,8 +40,10 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/addUser", "/auth/login")
-                        .permitAll()
+                        .requestMatchers("/auth/addUser", "/auth/login").permitAll()
+                        .requestMatchers("/api/addEmployee").hasRole("ADMIN")
+                        .requestMatchers("/api/employee", "/api/employees").hasRole("MANAGER")
+                        .requestMatchers("/api/employee-task").hasAnyRole("MANAGER", "EMPLOYEE")
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())

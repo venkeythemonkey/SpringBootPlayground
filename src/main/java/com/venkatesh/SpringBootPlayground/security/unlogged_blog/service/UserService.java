@@ -32,4 +32,9 @@ public class UserService implements UserDetailsService {
         userRepo.save(user);
         return "user added successfully";
     }
+
+    public User findByUserName(String userName) {
+        Optional<User> user = userRepo.findByUserName(userName);
+        return user.orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    }
 }

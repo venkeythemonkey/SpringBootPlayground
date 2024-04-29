@@ -1,5 +1,6 @@
 package com.venkatesh.SpringBootPlayground.security.unlogged_blog.service;
 
+import com.venkatesh.SpringBootPlayground.security.unlogged_blog.model.Role;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -9,8 +10,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.util.*;
 import java.util.function.Function;
 
@@ -26,8 +25,9 @@ public class JwtService {
 
     private static final String SECRET = "4oS6CjDqGdY89cQBgBURgDNgZMcPnEigl+vfqCOphRJxC+uCIxwBjOOe0GBxT1Lv";
 
-    public String generateToken(String userName){
-        Map<String, Objects> claims = new HashMap<>();
+    public String generateToken(String userName, Role role){
+        Map<String, String> claims = new HashMap<>();
+        claims.put("role", role.name());
 
         return Jwts.builder()
                 .setClaims(claims)
@@ -71,7 +71,7 @@ public class JwtService {
 
     //Extracts all claims from the JWT token.
     //return-> Claims object containing all claims.
-    private Claims extractAllClaims(String token) {
+    public Claims extractAllClaims(String token) {
         // Parse and return all claims from the token
         return Jwts.parserBuilder()
                 .setSigningKey(getSignKey())

@@ -22,10 +22,19 @@ public class EmployeeController {
         return service.findAll();
     }
 
+    @PostMapping("/addEmployee")
+    public String addEmployee(){
+        return "Employee added by ADMIN";
+    }
 
-    @PostMapping("/employee")
-    public Employee createEmployee(@RequestBody Employee employee) {
-        return service.save(employee);
+    @GetMapping("/employee")
+    public String whatemployee() {
+        return "This /employee end point can be accessed by MANAGER";
+    }
+
+    @GetMapping("/employee-task")
+    public String employeeTask(){
+        return "This can be accessed by both MANAGER and EMPLOYEE";
     }
 
 
